@@ -1,0 +1,33 @@
+#!/bin/sh
+job=$1
+job_status=$(( TOKEN && autorep -j $job) 2>$1)
+output=""
+check_job=0
+for i in $job_status;do
+    if [[ $i == "OH" || $i == "FA" || $i == "SU" || $i == "TE" || $i == "OI" || $i == "AC" || $i == "IN" ]]; then
+        output+="JOB STATUS BEFORE ACTIVITY:\n$job_status\n"
+        hold_status=$(( TOKEN && sendevent -E JOB_ON_HOLD -j $job) 2>$1)
+
+        if [ -z $hold_status ]; then 
+            output+="JOB PUT TO ON-HOLD COMMAND EXECUTED SUCCESSFULLY.\n"
+            final_status=$(( TOKEN && autorep -j $job) 2>$1)
+            check_status=0
+            for j in $final_status; do
+                if [[ $j == "OH" ]]; then
+                    output+="JOB PUT TO ON-HOLD SUCCESSFULLY.\n$final_status\n"
+                    check_status=1
+                fi
+            done
+            if [[ $check_status == 0 ]]; then
+                output+="ERROR: PUTTING ON-HOLD FAILED. STATUS AFTER PUTTING ON-HOLD:\n$final_status\n"
+            fi 
+        else
+            output+="ERROR: PUTTING ON-HOLD COMMAND EXCUTION FAILED.\n$hold_status\n"
+        fi 
+        check_job=1
+    fi 
+done
+if [[ $check_job == 0 ]]; then
+    output+="ERROR: JOB NOT IN ON-HOLD STATE.\n$job_status\n"
+fi 
+echo -e $output

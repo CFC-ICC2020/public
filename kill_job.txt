@@ -1,0 +1,33 @@
+#!/bin/sh
+job=$1
+job_status=$(( TOKEN && autorep -j $job) 2>$1)
+output=""
+check_job=0
+for i in $job_status;do
+    if [[ $i == "RU" ]]; then
+        output+="JOB STATUS BEFORE ACTIVITY:\n$job_status\n"
+        kill_status=$(( TOKEN && sendevent -E KILLJOB -j $job) 2>$1)
+
+        if [ -z $kill_status ]; then 
+            output+="JOB KILL COMMAND EXECUTED SUCCESSFULLY.\n"
+            final_status=$(( TOKEN && autorep -j $job) 2>$1)
+            check_status=0
+            for j in $final_status; do
+                if [[ $j == "TE" ]]; then
+                    output+="JOB KILLED SUCCESSFULLY.\n$final_status\n"
+                    check_status=1
+                fi
+            done
+            if [[ $check_status == 0 ]]; then
+                output+="ERROR: JOB KILLING FAILED. STATUS AFTER KILLING:\n$final_status\n"
+            fi 
+        else
+            output+="ERROR: JOB KILLING COMMAND EXCUTION FAILED.\n$kill_status\n"
+        fi 
+        check_job=1
+    fi 
+done
+if [[ $check_job == 0 ]]; then
+    output+="ERROR: JOB NOT IN RUNNING STATE.\n$job_status\n"
+fi 
+echo -e $output
