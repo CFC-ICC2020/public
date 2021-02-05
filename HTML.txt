@@ -1,0 +1,43 @@
+ '''Hi,
+
+This is an automated mail. Your response will be captured by Hivecenter.
+
+Kindly provide approval to reactivate the maximo account of the below user for given site id.
+
+Request details:
+
+Requestor id: {0}
+Requestor mail id: {1}
+<b><u>Site ID</u></b>: {2}
+<b><u>Security Groups</u></b>: {3}
+
+<p style="">Please click on one of the below options to send a mail for approving/rejecting/requesting for additional information for the request.</p><p style=""><b>Note: </b><p style="margin-left: 30px; margin-top: 5px;">1. If you like to <b>approve</b>, please click on Approve.<p style="margin-left: 30px; margin-top: 5px;">2. If you like to <b>reject</b>, please provide valid comments in the next line.</p><p style="margin-left: 30px; margin-top: 5px;">3. If any <b>additional details needed</b> regarding the request, please click on Additional Details Required and provide necessary required details. </p>
+
+
+<table width='100%' cellspacing='0' cellpadding='0'>
+<tr>
+<td style="background: #deeaf6; color: #1543B6; padding: 6px; text-align: center; height: 24px; font-size: 15px; border: 1px solid #1543B6">
+<a href='mailto:{4}?cc={5}&subject={6}&body=Approved' style="font-size: 12px; color: #1543B6; text-decoration: none; font-family: Arial;">
+<u>Approve Request  </u>
+</a>
+</td>
+<td style="background: #deeaf6; color: #1543B6; padding: 6px; text-align: center; height: 24px; font-size: 15px;border: 1px solid #1543B6;border-left:none;">
+<a href='mailto:{4}?cc={5}&subject={6}&body=Rejected' style="font-size: 12px; color: #1543B6; text-decoration: none; font-family: Arial;">
+<u>Reject Request </u>
+</a>
+</td>
+<td style="background: #deeaf6; color: #1543B6; padding: 6px; text-align: center; height: 24px; font-size: 15px;border: 1px solid #1543B6;border-left:none;">
+<a href='mailto:{4}?cc={5}&subject={6}' style="font-size: 12px; color: #1543B6; text-decoration: none; font-family: Arial;">
+<u>Additional Details Required </u>
+</a>
+</td>
+</table>
+<br>
+
+Regards,
+Hivecenter
+Cognizant Technology Solutions
+
+
+'''.format(Requestor_id, Requestor_mail,html_list,html_sec_gr, To, cc_app,subject)
+            return body
